@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body { background: #EFE7D6; font-family: 'Manrope', system-ui, sans-serif; color: #231F1E; }
+
+.hex-clip { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.fade-in { animation: fadeIn .35s ease both; }
+@keyframes fadeIn { from { opacity:0; transform: translateY(6px);} to {opacity:1; transform: translateY(0);} }
+
+:focus-visible { outline: 2px solid #C9962C; outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in { animation: none; }
+}

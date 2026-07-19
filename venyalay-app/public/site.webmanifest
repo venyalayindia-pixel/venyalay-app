@@ -1,0 +1,8 @@
+{
+  "name": "VENYALAY - India's Ritual Wellness Brand",
+  "short_name": "VENYALAY",
+  "theme_color": "#6B1E2B",
+  "background_color": "#FAF6EE",
+  "display": "standalone",
+  "start_url": "/"
+}
