@@ -18,7 +18,7 @@ export default function Checkout() {
 
   const [address, setAddress] = useState<Address>(initialAddress);
   const [errors, setErrors] = useState<Partial<Record<keyof Address, string>>>({});
-  const [payment, setPayment] = useState<PaymentMethod>("upi");
+  const [payment, setPayment] = useState<PaymentMethod>("cod");
   const [coupon, setCoupon] = useState("");
   const [couponApplied, setCouponApplied] = useState(false);
   const [placed, setPlaced] = useState(false);
@@ -123,21 +123,31 @@ export default function Checkout() {
       </div>
 
       <fieldset className="mt-5">
-        <legend className="font-bold text-sm text-charcoal mb-2">Payment Method</legend>
-        <div className="space-y-2">
-          {([
-            ["upi", "UPI"],
-            ["card", "Credit / Debit Card"],
-            ["netbanking", "Net Banking"],
-            ["cod", "Cash on Delivery"],
-          ] as [PaymentMethod, string][]).map(([value, label]) => (
-            <label key={value} className="flex items-center gap-3 rounded-xl px-4 py-3 bg-white border border-line text-sm">
-              <input type="radio" name="payment" value={value} checked={payment === value} onChange={() => setPayment(value)} />
-              {label}
-            </label>
-          ))}
-        </div>
-      </fieldset>
+  <legend className="font-bold text-sm text-charcoal mb-2">
+    Payment Method
+  </legend>
+
+  <label className="flex items-center gap-3 rounded-xl px-4 py-3 bg-white border border-line text-sm">
+    <input
+      type="radio"
+      name="payment"
+      value="cod"
+      checked={payment === "cod"}
+      onChange={() => setPayment("cod")}
+    />
+
+    <div>
+      <p className="font-semibold text-charcoal">Cash on Delivery</p>
+      <p className="text-xs text-[#6b6560]">
+        Pay when your VENYALAY order is delivered.
+      </p>
+    </div>
+  </label>
+
+  <div className="mt-2 rounded-xl px-4 py-3 bg-cream-deep text-xs text-[#6b6560]">
+    Online payments will be available soon.
+  </div>
+</fieldset>
 
       <div className="mt-5 rounded-2xl p-4 bg-cream-deep space-y-2">
         <div className="flex justify-between text-sm"><span className="text-[#6b6560]">Subtotal</span><span className="text-charcoal font-semibold">₹{subtotal}</span></div>
@@ -147,7 +157,9 @@ export default function Checkout() {
       </div>
 
       <button type="submit" className="w-full mt-5 py-3 rounded-full text-sm font-bold bg-maroon text-white">Place Order</button>
-      <p className="text-[11px] text-[#9a938a] mt-3 text-center">This is a mock checkout — no real payment is processed.</p>
+      <p className="text-[11px] text-[#9a938a] mt-3 text-center">
+  This is a mock checkout — no real payment is processed.
+</p>
     </form>
   );
 }

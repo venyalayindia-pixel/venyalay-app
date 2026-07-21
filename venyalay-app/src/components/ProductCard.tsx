@@ -25,9 +25,11 @@ export default function ProductCard({ product, size = "md" }: { product: Product
     backgroundColor: "#ffffff",
   }}
 >
-          <span className="text-[10px] px-2 py-1 rounded-full absolute top-2 left-2 bg-white/90 text-maroon font-bold">
-            {product.badge}
-          </span>
+          {product.comingSoon && (
+  <span className="absolute top-2 right-2 rounded-full bg-amber-500 text-white text-[10px] font-semibold px-2 py-1">
+    COMING SOON
+  </span>
+)}
           <button
             type="button"
             onClick={(e) => { e.preventDefault(); toggle(product.id); }}
@@ -46,14 +48,32 @@ export default function ProductCard({ product, size = "md" }: { product: Product
         </Link>
         <div className="flex items-center justify-between mt-3">
           <span className="font-bold text-charcoal text-sm">₹{product.price}</span>
-          <button
-            type="button"
-            onClick={() => addItem(product)}
-            aria-label={`Add ${product.name} to cart`}
-            className="w-8 h-8 rounded-full flex items-center justify-center bg-maroon"
-          >
-            <Plus size={15} className="text-white" />
-          </button>
+        <button
+  type="button"
+  onClick={() => {
+    if (!product.comingSoon) {
+      addItem(product);
+    }
+  }}
+  disabled={product.comingSoon}
+  title={product.comingSoon ? "Launching Soon" : "Add to Cart"}
+  aria-label={
+    product.comingSoon
+      ? `${product.name} - Launching Soon`
+      : `Add ${product.name} to cart`
+  }
+  className={`w-8 h-8 rounded-full flex items-center justify-center transition ${
+    product.comingSoon
+      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+      : "bg-maroon text-white hover:bg-maroon/90"
+  }`}
+>
+  {product.comingSoon ? (
+    <span className="text-[9px] font-semibold">SOON</span>
+  ) : (
+    <Plus size={15} className="text-white" />
+  )}
+</button>
         </div>
       </div>
     </div>

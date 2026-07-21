@@ -25,15 +25,30 @@ export default function Footer() {
       </div>
 
       <div className="flex items-center gap-3 mt-5">
-        <a href="#" aria-label="VENYALAY on Instagram" className="text-[#c9c2b6]"><Instagram size={16} /></a>
-        <a href="#" aria-label="VENYALAY on Facebook" className="text-[#c9c2b6]"><Facebook size={16} /></a>
-      </div>
+      
 
-      <p className="text-[11px] text-[#8a8378] mt-5 leading-relaxed">
-        Honey is a natural food. Colour, flavour, aroma and crystallisation may vary by floral source, geography, season and storage
-        conditions. Not suitable for infants below 12 months.
-      </p>
-      <p className="text-[11px] text-[#8a8378] mt-3">VENYA SCIENCES LLP · Mahabubnagar, Telangana, India</p>
+  <a
+    href="https://www.instagram.com/venyalayindia"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <Instagram size={18} />
+  </a>
+
+  <a
+    href="https://www.facebook.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="VENYALAY on Facebook"
+  >
+    <Facebook size={18} />
+  </a>
+
+</div>
+        <p className="text-[11px] text-[#8a8378] mt-5 leading-relaxed">
+  Honey is a natural food. Colour, flavour, aroma and crystal conditions. Not suitable for infants below 12 months.
+</p>
+          <p className="text-[11px] text-[#8a8378] mt-3">VENYA SCIENCES LLP · Mahabubnagar, Telangana, India</p>
       <p className="text-[11px] text-[#8a8378] mt-4">© {new Date().getFullYear()} VENYALAY. All rights reserved.</p>
     </footer>
   );

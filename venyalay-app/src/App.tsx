@@ -13,6 +13,7 @@ import Campaign from "./pages/Campaign";
 import DidYouKnow from "./pages/DidYouKnow";
 import Faq from "./pages/Faq";
 import BeeAndMe from "./pages/BeeAndMe";
+import BeeStory from "./pages/BeeStory";
 import Quiz from "./pages/Quiz";
 import TraceHoney from "./pages/TraceHoney";
 import Profile from "./pages/Profile";
@@ -21,6 +22,7 @@ import Wishlist from "./pages/Wishlist";
 import Rewards from "./pages/Rewards";
 import RitualTracker from "./pages/RitualTracker";
 import Addresses from "./pages/Addresses";
+import AboutVenyalay from "./pages/AboutVenyalay";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
@@ -44,6 +46,7 @@ export default function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<AboutVenyalay />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
@@ -54,6 +57,10 @@ export default function App() {
         <Route path="/explore/did-you-know" element={<DidYouKnow />} />
         <Route path="/explore/faq" element={<Faq />} />
         <Route path="/explore/bee-and-me" element={<BeeAndMe />} />
+        <Route
+  path="/explore/bee-and-me/:slug"
+  element={<BeeStory />}
+/>
         <Route path="/quiz" element={<Quiz />} />
         <Route path="/trace" element={<TraceHoney />} />
         <Route path="/profile" element={<Profile />} />

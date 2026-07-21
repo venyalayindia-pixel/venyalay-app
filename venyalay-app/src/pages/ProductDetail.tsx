@@ -23,6 +23,16 @@ export default function ProductDetail() {
   const [pin, setPin] = useState("");
   const [pinResult, setPinResult] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>("story");
+  const galleryImages =
+  product?.images?.length
+    ? product.images
+    : product?.image
+      ? [product.image]
+      : [];
+
+const [selectedImage, setSelectedImage] = useState(
+  galleryImages[0] ?? ""
+);
 
   if (!product) {
     return (
@@ -49,10 +59,10 @@ export default function ProductDetail() {
   return (
     <div className="pb-8 fade-in">
       <div className="relative h-64" style={{
-  backgroundImage: product.image
-    ? `url("${product.image}")`
-    : product.gradient,
-  backgroundSize: product.image ? "contain" : "cover",
+  backgroundImage: selectedImage
+  ? `url("${selectedImage}")`
+  : product.gradient,
+backgroundSize: selectedImage ? "contain" : "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
   backgroundColor: "#ffffff",
@@ -70,7 +80,27 @@ export default function ProductDetail() {
         </button>
         <span className="absolute bottom-4 left-5 text-[10px] px-3 py-1.5 rounded-full bg-white text-maroon font-bold">{product.badge}</span>
       </div>
-
+{galleryImages.length > 1 && (
+  <div className="flex gap-3 px-4 py-4 overflow-x-auto bg-white">
+    {galleryImages.map((image, index) => (
+      <button
+        key={image}
+        type="button"
+        onClick={() => setSelectedImage(image)}
+        aria-label={`View product image ${index + 1}`}
+        className={`h-20 w-20 shrink-0 rounded-xl overflow-hidden border-2 bg-white ${
+          selectedImage === image ? "border-gold" : "border-line"
+        }`}
+      >
+        <img
+          src={image}
+          alt={`${product.name} view ${index + 1}`}
+          className="h-full w-full object-contain"
+        />
+      </button>
+    ))}
+  </div>
+)}
       <div className="px-5 pt-5">
         <h1 className="font-display text-3xl font-semibold text-charcoal">{product.name}</h1>
         <p className="font-display italic text-base text-gold mt-1">{product.tagline}</p>
@@ -89,11 +119,21 @@ export default function ProductDetail() {
           </button>
         </div>
         <button
-          onClick={() => { addItem(product, qty); navigate("/checkout"); }}
-          className="w-full mt-2 py-3 rounded-full text-sm font-bold bg-gold text-white"
-        >
-          Buy Now
-        </button>
+  onClick={() => {
+    if (!product.comingSoon) {
+      addItem(product, qty);
+      navigate("/checkout");
+    }
+  }}
+  disabled={product.comingSoon}
+  className={`w-full mt-2 py-3 rounded-full text-sm font-bold ${
+    product.comingSoon
+      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+      : "bg-gold text-white"
+  }`}
+>
+  {product.comingSoon ? "Coming Soon" : "Buy Now"}
+</button>
 
         <div className="flex items-center gap-2 mt-5 rounded-full px-4 py-3 bg-cream-deep">
           <MapPin size={15} className="text-maroon" />

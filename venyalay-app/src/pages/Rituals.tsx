@@ -23,7 +23,16 @@ export default function Rituals() {
       </div>
 
       <div className="flex gap-2 overflow-x-auto no-scrollbar px-5 mt-5 pb-1">
-        {RITUALS.map((r) => <Pill key={r.id} active={active === r.id} onClick={() => setActive(r.id)}>{r.name}</Pill>)}
+        {RITUALS.map((r) => (
+  <div key={r.id} className="shrink-0">
+    <Pill
+      active={active === r.id}
+      onClick={() => setActive(r.id)}
+    >
+      {r.name}
+    </Pill>
+  </div>
+))}
       </div>
 
       <div className="px-5 mt-5">

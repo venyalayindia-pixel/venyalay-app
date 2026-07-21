@@ -1,4 +1,4 @@
-export interface Product {
+export interface Product {comingSoon?: boolean;
   id: string;
   name: string;
   tagline: string;
@@ -13,7 +13,9 @@ export interface Product {
   story: string;
   gradient: string;
   image?: string;
-batchCode: string;
+  
+  images?: string[];
+  batchCode: string;
   packagingDate: string;
   bestBefore: string;
   category: "Floral Honey" | "Founder Batch" | "New Arrivals" | "Best Sellers";

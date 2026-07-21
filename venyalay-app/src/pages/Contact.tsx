@@ -24,18 +24,44 @@ export default function Contact() {
       <div className="mt-5 space-y-3">
         <div className="flex items-center gap-3 rounded-xl p-3 bg-cream-deep text-sm">
           <MapPin size={15} className="text-maroon shrink-0" />
-          <span className="text-charcoal">VENYA SCIENCES LLP, Mahabubnagar, Telangana, India</span>
+          <span className="text-charcoal">
+  <strong>Reg. Office:</strong><br />
+  VENYA SCIENCES LLP<br />
+  8-5-66/103, Dhanalaxmi Colony,<br />
+  Teachers Colony,<br />
+  Mahabubnagar-509001,<br />
+  Telangana, India
+</span>
         </div>
         <div className="flex items-center gap-3 rounded-xl p-3 bg-cream-deep text-sm">
           <Mail size={15} className="text-maroon shrink-0" />
-          <span className="text-charcoal">care@venyalay.example [placeholder]</span>
+          <a
+  href="mailto:venyalayindia@gmail.com"
+  className="text-charcoal hover:text-maroon"
+>
+  venyalayindia@gmail.com
+</a>
         </div>
         <div className="flex items-center gap-3 rounded-xl p-3 bg-cream-deep text-sm">
           <Phone size={15} className="text-maroon shrink-0" />
-          <span className="text-charcoal">+91 00000 00000 [placeholder]</span>
+          <a
+  href="tel:+919505111596"
+  className="text-charcoal hover:text-maroon"
+>
+  +91 95051 11596
+</a>
         </div>
         <div className="flex items-center gap-4 px-1">
-          <a href="#" aria-label="Instagram" className="text-maroon"><Instagram size={18} /></a>
+          
+           <a
+  href="https://www.instagram.com/venyalayindia"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Instagram"
+  className="text-maroon"
+>
+  <Instagram size={18} />
+</a>
           <a href="#" aria-label="Facebook" className="text-maroon"><Facebook size={18} /></a>
         </div>
       </div>

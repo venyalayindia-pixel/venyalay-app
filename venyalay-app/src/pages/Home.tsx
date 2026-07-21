@@ -6,6 +6,7 @@ import { CAMPAIGN_POSTS, RITUALS, TESTIMONIALS } from "../data/content";
 import SectionHeading from "../components/SectionHeading";
 import ProductCard from "../components/ProductCard";
 import FounderStory from "../components/FounderStory";
+import HomeHighlights from "../components/HomeHighlights";
 import NewsletterForm from "../components/NewsletterForm";
 import Footer from "../components/Footer";
 
@@ -13,7 +14,7 @@ const RITUAL_ICONS: Record<string, React.ElementType> = { morning: Sunrise, nigh
 const RITUAL_COLORS: Record<string, string> = { morning: "#E8A33D", night: "#6B1E2B", food: "#C9962C", pooja: "#5C6B4A" };
 
 export default function Home() {
-  const founderBatch = PRODUCTS.slice(0, 4);
+  const founderBatch = PRODUCTS.slice(0, 6);
   const todayPost = CAMPAIGN_POSTS[0];
 
   return (
@@ -34,9 +35,13 @@ export default function Home() {
 
       <div className="mt-8">
         <SectionHeading eyebrow="Featured" title="Founder Batch" sub="Selected floral honey, released in limited quantities." />
-        <div className="flex gap-4 overflow-x-auto no-scrollbar px-5 pb-2">
-          {founderBatch.map((p) => <ProductCard key={p.id} product={p} size="sm" />)}
-        </div>
+        <div className="flex gap-3 overflow-x-auto no-scrollbar px-5 pb-3">
+  {founderBatch.map((p) => (
+    <div key={p.id} className="w-[150px] shrink-0">
+      <ProductCard product={p} size="sm" />
+    </div>
+  ))}
+</div>
       </div>
 
       <div className="mt-10">
@@ -91,6 +96,7 @@ export default function Home() {
       </div>
 
       <div className="mt-10 px-5"><FounderStory /></div>
+      <HomeHighlights />
 
       <div className="mt-10">
         <SectionHeading eyebrow="Community" title="What VENYALAYONS Say" />
