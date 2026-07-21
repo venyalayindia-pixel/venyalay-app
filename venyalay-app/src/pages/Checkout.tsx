@@ -53,36 +53,96 @@ export default function Checkout() {
     if (coupon.trim().toUpperCase() === "VENYALAY10") setCouponApplied(true);
   };
 
-  const handlePlaceOrder = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validate()) return;
-    addAddress(address);
-    addOrder({
-      id: `VNY${Date.now()}`,
-      date: new Date().toISOString(),
-      items: items.map((i) => {
-        const p = getProductById(i.productId)!;
-        return { productId: p.id, name: p.name, price: p.price, quantity: i.quantity };
-      }),
-      total: grandTotal,
-      status: "Processing",
-      address,
-    });
-    clearCart();
-    setPlaced(true);
-  };
+const handlePlaceOrder = (e: React.FormEvent) => {
+  e.preventDefault();
 
-  if (placed) {
-    return (
-      <div className="pb-8 pt-16 px-5 text-center fade-in">
-        <CheckCircle2 size={48} className="text-leaf mx-auto" />
-        <h1 className="font-display text-2xl font-semibold text-charcoal mt-4">Order Confirmed</h1>
-        <p className="text-sm text-[#6b6560] mt-2">Thank you — your ritual batch is on its way. A confirmation has been saved to your order history.</p>
-        <Link to="/profile" className="inline-block mt-6 px-5 py-3 rounded-full text-sm font-bold bg-maroon text-white">View Orders</Link>
-      </div>
-    );
-  }
+  if (!validate()) return;
 
+  const orderId = `VNY${Date.now()}`;
+
+  const orderItems = items.map((item) => {
+    const product = getProductById(item.productId)!;
+
+    return {
+      productId: product.id,
+      name: product.name,
+      price: product.price,
+      quantity: item.quantity,
+    };
+  });
+
+  const whatsappMessage = `
+🐝 NEW VENYALAY ORDER
+
+Order ID: ${orderId}
+
+Customer:
+${address.fullName}
+${address.phone}
+
+Address:
+${address.line1}
+${address.city}
+${address.state}
+${address.pincode}
+
+Products:
+
+${orderItems
+  .map(
+    (p) =>
+      `${p.name}
+Qty: ${p.quantity}
+₹${p.price}`
+  )
+  .join("\n\n")}
+
+Total: ₹${grandTotal}
+
+Payment: Cash on Delivery
+`.trim();
+
+  addAddress(address);
+
+  addOrder({
+    id: orderId,
+    date: new Date().toISOString(),
+    items: orderItems,
+    total: grandTotal,
+    status: "Processing",
+    address,
+  });
+
+  window.open(
+    `https://wa.me/919505111596?text=${encodeURIComponent(whatsappMessage)}`,
+    "_blank"
+  );
+
+  clearCart();
+  setPlaced(true);
+};
+if (placed) {
+  return (
+    <div className="pb-8 pt-16 px-5 text-center fade-in">
+      <CheckCircle2 size={48} className="text-leaf mx-auto" />
+
+      <h1 className="font-display text-2xl font-semibold text-charcoal mt-4">
+        Order Ready to Confirm
+      </h1>
+
+      <p className="text-sm text-[#6b6560] mt-2">
+        WhatsApp has opened with your order details. Please tap Send to confirm your order.
+      </p>
+
+      <Link
+        to="/profile"
+        className="inline-block mt-6 px-5 py-3 rounded-full text-sm font-bold bg-maroon text-white"
+      >
+        View Orders
+      </Link>
+    </div>
+  );
+}
   return (
     <form onSubmit={handlePlaceOrder} noValidate className="pb-8 pt-6 px-5 fade-in">
       <h1 className="font-display text-2xl font-semibold text-charcoal mb-5">Checkout</h1>
