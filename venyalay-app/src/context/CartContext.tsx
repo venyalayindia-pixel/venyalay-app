@@ -50,6 +50,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }
       return [...prev, { productId: product.id, quantity }];
     });
+    if (typeof (window as any).fbq === "function") {
+  (window as any).fbq("track", "AddToCart", {
+    content_ids: [product.id],
+    content_name: product.name,
+    content_type: "product",
+    value: product.price * quantity,
+    currency: "INR",
+    num_items: quantity,
+  });
+}
     setLastToast(`${product.name} added to cart`);
     window.setTimeout(() => setLastToast(null), 2000);
   };

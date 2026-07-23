@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { ChevronLeft, Heart, MapPin, Check } from "lucide-react";
 import { getProductById, REVIEWS } from "../data/products";
@@ -17,6 +17,17 @@ export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const product = getProductById(id);
+  useEffect(() => {
+  if (!product || typeof (window as any).fbq !== "function") return;
+
+  (window as any).fbq("track", "ViewContent", {
+    content_ids: [product.id],
+    content_name: product.name,
+    content_type: "product",
+    value: product.price,
+    currency: "INR",
+  });
+}, [product]);
   const { addItem } = useCart();
   const { toggle, isWishlisted } = useWishlist();
   const [qty, setQty] = useState(1);
