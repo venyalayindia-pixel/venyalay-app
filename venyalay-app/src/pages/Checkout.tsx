@@ -42,10 +42,11 @@ type RazorpayOptions = {
   image?: string;
   order_id: string;
   handler: (response: RazorpayResponse) => Promise<void>;
-  prefill: {
-    name: string;
-    contact: string;
-  };
+ prefill: {
+  name: string;
+  email: string;
+  contact: string;
+};
   notes: {
     address: string;
   };
@@ -82,6 +83,7 @@ const initialAddress: Address = {
   state: "",
   pincode: "",
   phone: "",
+  email: "",
 };
 
 const loadRazorpayScript = (): Promise<boolean> =>
@@ -167,7 +169,11 @@ export default function Checkout() {
     if (!/^\d{6}$/.test(address.pincode.trim())) {
       next.pincode = "Enter a valid 6-digit PIN code.";
     }
-
+if (
+  !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(address.email.trim())
+) {
+  next.email = "Enter a valid email address.";
+}
     if (!/^[6-9]\d{9}$/.test(address.phone.trim())) {
       next.phone = "Enter a valid 10-digit phone number.";
     }
@@ -289,6 +295,11 @@ export default function Checkout() {
                 razorpay_order_id: serverOrder.id,
                 razorpay_payment_id: response.razorpay_payment_id,
                 razorpay_signature: response.razorpay_signature,
+                customer: {
+  name: address.fullName.trim(),
+  email: address.email.trim(),
+  phone: address.phone.trim(),
+},
               }),
             });
 
@@ -319,10 +330,11 @@ export default function Checkout() {
           }
         },
 
-        prefill: {
-          name: address.fullName.trim(),
-          contact: address.phone.trim(),
-        },
+       prefill: {
+  name: address.fullName.trim(),
+  email: address.email.trim(),
+  contact: address.phone.trim(),
+},
 
         notes: {
           address: `${address.line1}, ${address.city}, ${address.state} - ${address.pincode}`,
@@ -412,7 +424,8 @@ export default function Checkout() {
             ["city", "City", "text"],
             ["state", "State", "text"],
             ["pincode", "PIN code", "text"],
-            ["phone", "Phone number", "tel"],
+["email", "Email Address", "email"],
+["phone", "Phone number", "tel"],
           ] as [keyof Address, string, string][]
         ).map(([key, label, type]) => (
           <div key={key}>

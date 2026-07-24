@@ -9,11 +9,12 @@ export default async function handler(req, res) {
   }
 
   try {
-    const {
-      razorpay_order_id,
-      razorpay_payment_id,
-      razorpay_signature,
-    } = req.body || {};
+   const {
+  razorpay_order_id,
+  razorpay_payment_id,
+  razorpay_signature,
+  customer,
+} = req.body || {};
 
     if (
       !razorpay_order_id ||
@@ -46,7 +47,42 @@ export default async function handler(req, res) {
         message: "Payment verification failed",
       });
     }
+if (customer?.email && process.env.RESEND_API_KEY) {
+  try {
+    const emailResponse = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "VENYALAY <orders@venyalayindia.com>",
+        to: [customer.email],
+        subject: `VENYALAY order confirmed — ${razorpay_order_id}`,
+        text: `Hello ${customer.name || "Customer"},
 
+Thank you for your VENYALAY order.
+
+Your payment was successful.
+
+Order ID: ${razorpay_order_id}
+Payment ID: ${razorpay_payment_id}
+
+We will notify you when your order is shipped.
+
+Regards,
+VENYALAY`,
+      }),
+    });
+
+    if (!emailResponse.ok) {
+      const emailError = await emailResponse.text();
+      console.error("Resend email failed:", emailError);
+    }
+  } catch (emailError) {
+    console.error("Unable to send confirmation email:", emailError);
+  }
+}
     return res.status(200).json({
       success: true,
       message: "Payment verified successfully",

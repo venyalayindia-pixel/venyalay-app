@@ -53,8 +53,8 @@ export interface Address {
   state: string;
   pincode: string;
   phone: string;
+  email: string;
 }
-
 export interface Review {
   id: string;
   productId: string;

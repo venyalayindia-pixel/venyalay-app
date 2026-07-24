@@ -69,7 +69,7 @@ const [selectedImage, setSelectedImage] = useState(
 
   return (
     <div className="pb-8 fade-in">
-      <div className="relative h-64" style={{
+     <div className="relative h-[340px] sm:h-[380px]" style={{
   backgroundImage: selectedImage
   ? `url("${selectedImage}")`
   : product.gradient,
