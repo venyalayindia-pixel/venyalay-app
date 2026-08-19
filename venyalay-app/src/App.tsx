@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Layout from "./components/Layout";
 
 import Home from "./pages/Home";
@@ -40,10 +40,40 @@ import AdminProducts from "./admin/AdminProducts";
 import AdminOrders from "./admin/AdminOrders";
 import AdminCustomers from "./admin/AdminCustomers";
 import AdminContent from "./admin/AdminContent";
+function CanonicalUrl() {
+  const location = useLocation();
+
+  React.useEffect(() => {
+    const baseUrl = "https://www.venyalayindia.com";
+    const path =
+      location.pathname === "/"
+        ? "/"
+        : `${location.pathname.replace(/\/+$/, "")}/`;
+
+    const canonicalUrl = `${baseUrl}${path}`;
+
+    let canonical = document.querySelector(
+      'link[rel="canonical"]'
+    ) as HTMLLinkElement | null;
+
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+
+    canonical.setAttribute("href", canonicalUrl);
+  }, [location.pathname]);
+
+  return null;
+}
+
 
 export default function App() {
   return (
-    <Routes>
+     <>
+      <CanonicalUrl />
+      <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<AboutVenyalay />} />
@@ -57,10 +87,7 @@ export default function App() {
         <Route path="/explore/did-you-know" element={<DidYouKnow />} />
         <Route path="/explore/faq" element={<Faq />} />
         <Route path="/explore/bee-and-me" element={<BeeAndMe />} />
-        <Route
-  path="/explore/bee-and-me/:slug"
-  element={<BeeStory />}
-/>
+        
         <Route path="/quiz" element={<Quiz />} />
         <Route path="/trace" element={<TraceHoney />} />
         <Route path="/profile" element={<Profile />} />
@@ -91,6 +118,7 @@ export default function App() {
       <Route path="*" element={<Layout />}>
         <Route path="*" element={<NotFound />} />
       </Route>
-    </Routes>
-  );
+ </Routes>
+</>
+);
 }
