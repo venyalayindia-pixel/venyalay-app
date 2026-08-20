@@ -16,7 +16,47 @@ type Tab = "story" | "ritual" | "nutrition" | "trace" | "reviews";
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const product = getProductById(id);
+  const product = getProductById(id);  useEffect(() => {
+    if (!product) return;
+
+    const seoData: Record<string, { title: string; description: string }> = {
+      "tulsi-honey": {
+        title: "Tulsi Honey | Raw & Pure Tulsi Honey in India | VENYALAY™",
+        description:
+          "Shop VENYALAY™ Tulsi Honey — raw, unheated and pure honey inspired by Ayurveda. Discover its distinctive herbal aroma, taste and ritual experience.",
+      },
+
+      "jamun-honey": {
+        title: "Jamun Honey | Raw & Pure Jamun Honey in India | VENYALAY™",
+        description:
+          "Shop VENYALAY™ Jamun Honey — raw, unheated and pure floral honey with a bold, distinctive character. Explore premium Jamun Honey from VENYALAY™.",
+      },
+
+      "sidr-honey": {
+        title: "Ber Honey (Sidr Honey) | Raw Indian Ber Honey | VENYALAY™",
+        description:
+          "Shop VENYALAY™ Ber (Sidr) Honey — raw, unheated and pure Indian floral honey with a rich aroma and distinctive taste. Rooted in tradition, naturally rare.",
+      },
+    };
+
+    const seo = seoData[product.id];
+
+    if (!seo) return;
+
+    document.title = seo.title;
+
+    let metaDescription = document.querySelector(
+      'meta[name="description"]'
+    ) as HTMLMetaElement | null;
+
+    if (!metaDescription) {
+      metaDescription = document.createElement("meta");
+      metaDescription.name = "description";
+      document.head.appendChild(metaDescription);
+    }
+
+    metaDescription.content = seo.description;
+  }, [product]);
   useEffect(() => {
   if (!product || typeof (window as any).fbq !== "function") return;
 
