@@ -10,6 +10,7 @@ const MENU_LINKS = [
   { to: "/quiz", label: "Honey Finder" },
   { to: "/trace", label: "Trace Your Honey" },
   { to: "/rewards", label: "Rewards" },
+  { to: "/about", label: "About VENYALAY" },
   { to: "/contact", label: "Contact" },
 ];
 
