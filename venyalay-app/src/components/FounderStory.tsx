@@ -106,19 +106,7 @@ export default function FounderStory() {
           </p>
         </div>
 
-        <div className="mt-8 rounded-2xl bg-[#231F1E] p-5 text-center">
-          <p className="text-xs tracking-widest uppercase font-bold text-gold">
-            The VENYALAY Philosophy
-          </p>
-
-          <p className="mt-4 font-display text-lg md:text-xl leading-relaxed text-white">
-            We educate before we persuade.
-            <br />
-            We build trust before we build sales.
-            <br />
-            We create lasting value before lasting growth.
-          </p>
-        </div>
+        
       </div>
     </section>
   );

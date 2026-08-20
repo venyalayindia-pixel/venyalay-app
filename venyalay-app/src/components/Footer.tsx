@@ -45,10 +45,9 @@ export default function Footer() {
   </a>
 
 </div>
-        <p className="text-[11px] text-[#8a8378] mt-5 leading-relaxed">
-  Honey is a natural food. Colour, flavour, aroma and crystal conditions. Not suitable for infants below 12 months.
+<p className="text-[11px] text-[#8a8378] mt-5 leading-relaxed">
+  Honey is a natural food. Colour, flavour, aroma and crystallisation may vary naturally. Not suitable for infants below 12 months.
 </p>
-          <p className="text-[11px] text-[#8a8378] mt-3">VENYA SCIENCES LLP · Mahabubnagar, Telangana, India</p>
       <p className="text-[11px] text-[#8a8378] mt-4">© {new Date().getFullYear()} VENYALAY. All rights reserved.</p>
     </footer>
   );
